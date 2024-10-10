@@ -1,0 +1,101 @@
+class Node:
+    def _init_(self, data):
+        self.data = data
+        self.next = None
+        self.pre = None
+
+class DoubleLinkedList:
+    def _init_(self):
+        self.head = None
+        self.tail = None
+        self.temp = None
+
+    def create(self):
+        size = int(input("Enter the size: "))
+        for i in range(size):
+            data = int(input("Enter the value: "))
+            newnode = Node(data)
+            if self.head is None:
+                self.head = newnode
+                self.tail = newnode
+            else:
+                self.tail.next = newnode
+                newnode.pre = self.tail
+                self.tail = newnode
+
+    def insert_first(self):
+        value = int(input("Enter the value to add at the front: "))
+        newnode = Node(value)
+        if self.head is None:
+            self.head = newnode
+            self.tail = newnode
+        else:
+            newnode.next = self.head
+            self.head.pre = newnode
+            self.head = newnode
+
+    def insert_end(self):
+        value = int(input("Enter the value to add at the end: "))
+        newnode = Node(value)
+        if self.head is None:
+            self.head = newnode
+            self.tail = newnode
+        else:
+            newnode.pre = self.tail
+            self.tail.next = newnode
+            self.tail = newnode
+    
+    def insert_middle(self):
+        pos=int(input("enter the position: "))
+        value=int(input("enter the value to add middle: "))
+        newnode=Node(value)
+        self.temp=self.head
+        i=1
+        while (i < pos-1):
+            self.temp=self.temp.next
+            i +=1
+        newnode.next=self.temp.next
+        newnode.pre=self.temp
+        self.temp.next=newnode
+        newnode.next.pre=newnode
+    
+    def del_front(self):
+        self.temp=self.head
+        self.head=self.temp.next
+        self.head.pre=None
+        self.temp.next=None
+        del self.temp
+    
+    def del_end(self):
+        self.temp=self.tail
+        self.tail=self.temp.pre
+        self.tail.next=None
+        self.temp.pre=None
+        del self.temp
+    
+    def del_middle(self):
+        pos=int(input("enter the position: "))
+        self.temp=self.head
+        i=1
+        while i < pos:
+            self.temp=self.temp.next
+            i += 1
+        self.temp.pre.next=self.temp.next
+        self.temp.next.pre=self.temp.pre
+        self.temp.pre=None
+        self.temp.next=None
+        del self.temp     
+
+
+    def display(self):
+        self.temp = self.head
+        while self.temp:
+            print(self.temp.data)
+            self.temp = self.temp.next
+        
+
+
+ll = DoubleLinkedList()
+ll.create()
+ll.del_middle()
+ll.display()
